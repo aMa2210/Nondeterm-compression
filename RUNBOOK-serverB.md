@@ -16,12 +16,11 @@ export PIP_USER=0
 .venv/bin/python -c "from huggingface_hub import login; login()"  # or hf auth login
 ```
 
-Download the frozen modelopt checkpoints (private repo, ~70 GB — see
-`MODELOPT_CKPT_REPO` below; server A fills this in before pushing):
+Download the frozen modelopt checkpoints (private HF repo, ~70 GB):
 
 ```bash
 for K in 14080 13568 12800 12288 11520; do
-  .venv/bin/hf download <MODELOPT_CKPT_REPO> --include "llama31_modelopt_keep${K}/*" \
+  .venv/bin/hf download AmA-2025/llama31-modelopt-pruned-ffn --include "llama31_modelopt_keep${K}/*" \
       --local-dir acc_protocol/models/
 done
 # verify: sha256 of 2 sampled shards must match acc_protocol/models_sha256.txt
