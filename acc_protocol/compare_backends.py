@@ -32,6 +32,8 @@ def main():
     ap.add_argument("--model", choices=TAGS, required=True)
     ap.add_argument("--n", type=int, default=250)
     ap.add_argument("--variant", default="")
+    ap.add_argument("--acc3-bs", type=int, default=16,
+                    help="batch size whose acc3 groupings define the noise floor")
     args = ap.parse_args()
     tag = TAGS[args.model]
     if args.variant:
@@ -69,7 +71,8 @@ def main():
     if not widths:
         sys.exit("no matched acc2_keep{K} / acc2_modelopt_keep{K} arm pairs found")
 
-    acc3_arms = sorted(a for a in arms if a.startswith("acc3"))
+    acc3_arms = sorted(a for a in arms
+                       if a.startswith(f"acc3_b{args.acc3_bs}_"))
 
     lines = [f"# Pruning backend comparison — {tag}", "",
              "topiary = salience width truncation (in-place); "

@@ -8,13 +8,23 @@ server A's (`*_gsm8k.jsonl` vs `*_mmlu.jsonl`) — git merges cleanly.
 ## 0. One-time setup
 
 ```bash
-git clone <REPO_URL> Nondeterm-compression && cd Nondeterm-compression
+git clone https://github.com/aMa2210/Nondeterm-compression.git && cd Nondeterm-compression
+git config --global --add safe.directory "$PWD"
+git config user.name "Tairan" && git config user.email "tkm199888@gmail.com"
+git config credential.helper 'cache --timeout=604800'
 python3.11 -m venv .venv
 export PIP_USER=0
 .venv/bin/pip install -r requirements-eval.lock   # torch 2.13.0 (cu130 wheel from default pypi), transformers 5.15.1
-# HF login (llama is gated; also needed for the private ckpt repo):
+# HF login — MUST use the AmA-2025 account token (the user provides it; it has
+# gated-llama access AND owns the private ckpt repo; other accounts get 403/404):
 .venv/bin/python -c "from huggingface_hub import login; login()"  # or hf auth login
+.venv/bin/python -c "from huggingface_hub import HfApi; print(HfApi().whoami()['name'])"  # must print AmA-2025
 ```
+
+Expected GPU: H100 NVL **MIG 3g.47gb** — the SAME MIG profile as server A
+(server A is not a full card either), so noise floors are comparable and
+`--variant h100` is the shared label for this hardware pair. If `nvidia-smi -L`
+shows a different profile, STOP and report before running anything.
 
 Download the frozen modelopt checkpoints (private HF repo, ~70 GB):
 
@@ -24,6 +34,8 @@ for K in 14080 13568 12800 12288 11520; do
       --local-dir acc_protocol/models/
 done
 # verify: sha256 of 2 sampled shards must match acc_protocol/models_sha256.txt
+# (NB: keep13568 and keep14080 legitimately share an identical LAST shard —
+#  it holds only the unpruned lm_head/norm; not a copy error)
 sha256sum acc_protocol/models/llama31_modelopt_keep12800/model-00001-of-*.safetensors
 ```
 
@@ -34,12 +46,16 @@ in the repo (frozen artifact — do NOT recalibrate).
 
 ```bash
 .venv/bin/python acc_protocol/generate.py --model llama31 --arm acc1 \
-    --n 1000 --variant h100 --limit 20 --suffix _audit --max-new-tokens 1024
-git add acc_protocol/outputs && git commit -m "serverB audit" && git push
+    --n 1000 --variant h100 --limit 20 --suffix _auditB --max-new-tokens 1024
+git pull --rebase && git add acc_protocol/outputs && git commit -m "serverB audit" && git push
 ```
 
-(Server A diffs the two audits token-by-token; result goes in findings. The
-protocol does not depend on it matching.)
+Notes: the audit deliberately runs BOTH benchmarks — it exists to diff the two
+machines on identical questions, and is the one exception to the
+"no `--benchmarks mmlu`" rule below. The suffix is `_auditB` (server A's audit
+files are `acc1_audit_*`), so filenames stay disjoint. `_audit*` files are
+excluded from scoring automatically. The protocol does not depend on the diff
+matching.
 
 ## 2. Main matrix — GSM8K 1000 for all 21 arms (~13 h, run sequentially)
 
@@ -72,7 +88,10 @@ Notes:
 
 ## 3. Optional (only if you finish before server A)
 
-Acc3 at B=32, GSM8K side:
+Acc3 at B=32, GSM8K side (B=16 is the primary noise floor — deliberate, for
+comparability with the gemma3/A100 250q protocol; PLAN.md's B≥32 is this
+optional extra). `score.py`/`compare_backends.py` select acc3 arms by
+`--acc3-bs` (default 16), so B=32 arms never pollute the B=16 thresholds:
 
 ```bash
 $P acc_protocol/generate.py --model llama31 --arm acc3 --grouping 0 1 2 3 4 5 6 7 8 9 \

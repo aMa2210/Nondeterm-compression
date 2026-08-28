@@ -44,6 +44,8 @@ def main():
     ap.add_argument("--model", choices=TAGS, required=True)
     ap.add_argument("--n", type=int, default=250)
     ap.add_argument("--variant", default="")
+    ap.add_argument("--acc3-bs", type=int, default=16,
+                    help="batch size whose acc3 groupings define the noise floor")
     args = ap.parse_args()
     tag = TAGS[args.model]
     if args.variant:
@@ -108,7 +110,8 @@ def main():
             f"{np.mean([v['tier']=='fail' for v in sel])*100:.1f} |")
 
     # ---------------- Acc3 stats + claims ----------------
-    acc3_arms = [a for a in arms if a.startswith("acc3")]
+    # only one batch size defines the noise floor — never pool B=16 with B=32
+    acc3_arms = [a for a in arms if a.startswith(f"acc3_b{args.acc3_bs}_")]
     acc2_arms = [a for a in arms if a.startswith("acc2")]
     if acc3_arms and "acc1" in arms:
         for bench in ("mmlu", "gsm8k", "all"):
