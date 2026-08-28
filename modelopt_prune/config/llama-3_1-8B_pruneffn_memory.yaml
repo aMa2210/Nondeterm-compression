@@ -1,0 +1,27 @@
+defaults:
+  - Llama-3_1-8B
+  - _self_
+
+# Input Hugging Face model to compress
+input_hf_model_path: /home/jovyan/.cache/huggingface/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659
+
+# Dataset path for pruning and NAS scoring
+dataset_path: /home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/datasets/Puzzle-KD-Nemotron-Post-Training-Dataset-v2
+
+# Working directory for puzzletron outputs
+puzzle_dir: /home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/puzzle_dir
+
+# MIP memory constraint (in MiB) — unused in the convert-only (uniform-width)
+# run; kept for an optional heterogeneous bonus arm later.
+mip:
+  human_constraints:
+    target_memory: 14_500 # ~10% cut of the ~16.1 GiB BF16 model
+  sweep:
+    enabled: false
+    memory_compression_rates: [0.5, 0.6, 0.7, 0.8, 0.9]
+    output_csv: ${puzzle_dir}/mip_sweep_results.csv
+
+# Uniform FFN widths matched to the topiary sweep (teacher = 14336):
+# cuts of 1.8 / 5.4 / 10.7 / 14.3 / 19.6 %
+pruning:
+  intermediate_size_list: [14080, 13568, 12800, 12288, 11520]
