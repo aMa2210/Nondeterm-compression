@@ -2,44 +2,44 @@
 
 | arm | mmlu | gsm8k | all | trunc% | fail% |
 |---|---|---|---|---|---|
-| acc1 | 68.0 | 85.7 | 78.7 | 1.6 | 0.9 |
-| acc2_keep11520 | nan | 54.1 | 54.1 | 1.4 | 0.0 |
-| acc2_keep12288 | nan | 67.6 | 67.6 | 0.6 | 0.0 |
-| acc2_keep12800 | nan | 70.4 | 70.4 | 0.7 | 0.0 |
-| acc2_keep13568 | nan | 79.3 | 79.3 | 1.1 | 0.0 |
-| acc2_keep14080 | nan | 83.6 | 83.6 | 0.8 | 0.0 |
-| acc2_modelopt_keep11520 | nan | 64.9 | 64.9 | 1.7 | 0.0 |
-| acc2_modelopt_keep12288 | nan | 72.1 | 72.1 | 0.8 | 0.0 |
-| acc2_modelopt_keep12800 | nan | 78.6 | 78.6 | 1.5 | 0.0 |
-| acc2_modelopt_keep13568 | nan | 81.7 | 81.7 | 1.5 | 0.0 |
-| acc2_modelopt_keep14080 | nan | 83.2 | 83.2 | 0.8 | 0.0 |
-| acc3_b16_g00 | nan | 86.1 | 86.1 | 1.1 | 0.0 |
-| acc3_b16_g01 | nan | 86.5 | 86.5 | 1.1 | 0.0 |
-| acc3_b16_g02 | nan | 85.8 | 85.8 | 1.2 | 0.0 |
-| acc3_b16_g03 | nan | 85.7 | 85.7 | 1.4 | 0.0 |
-| acc3_b16_g04 | nan | 86.4 | 86.4 | 1.1 | 0.0 |
-| acc3_b16_g05 | nan | 85.4 | 85.4 | 1.2 | 0.0 |
-| acc3_b16_g06 | nan | 85.2 | 85.2 | 1.5 | 0.0 |
-| acc3_b16_g07 | nan | 84.8 | 84.8 | 1.2 | 0.0 |
-| acc3_b16_g08 | nan | 86.2 | 86.2 | 1.2 | 0.0 |
-| acc3_b16_g09 | nan | 85.8 | 85.8 | 1.6 | 0.0 |
+| acc1 | 66.9 | 85.7 | 76.3 | 1.8 | 1.1 |
+| acc2_keep11520 | 58.4 | 54.1 | 56.2 | 2.1 | 1.4 |
+| acc2_keep12288 | 59.2 | 67.6 | 63.4 | 1.7 | 1.9 |
+| acc2_keep12800 | 64.1 | 70.4 | 67.2 | 1.6 | 1.1 |
+| acc2_keep13568 | 63.3 | 79.3 | 71.3 | 1.9 | 0.8 |
+| acc2_keep14080 | 67.1 | 83.6 | 75.3 | 1.4 | 1.1 |
+| acc2_modelopt_keep11520 | 55.8 | 64.9 | 60.4 | 3.3 | 1.7 |
+| acc2_modelopt_keep12288 | 60.3 | 72.1 | 66.2 | 2.2 | 1.4 |
+| acc2_modelopt_keep12800 | 62.1 | 78.6 | 70.3 | 2.2 | 1.4 |
+| acc2_modelopt_keep13568 | 63.2 | 81.7 | 72.5 | 1.8 | 1.1 |
+| acc2_modelopt_keep14080 | 67.4 | 83.2 | 75.3 | 1.3 | 0.9 |
+| acc3_b16_g00 | 66.7 | 86.1 | 76.4 | 1.8 | 1.1 |
+| acc3_b16_g01 | 67.8 | 86.5 | 77.1 | 1.9 | 0.9 |
+| acc3_b16_g02 | 67.3 | 85.8 | 76.5 | 2.0 | 0.9 |
+| acc3_b16_g03 | 67.8 | 85.7 | 76.8 | 2.1 | 1.1 |
+| acc3_b16_g04 | 67.9 | 86.4 | 77.1 | 1.8 | 1.0 |
+| acc3_b16_g05 | 66.5 | 85.4 | 75.9 | 1.7 | 1.1 |
+| acc3_b16_g06 | 66.9 | 85.2 | 76.0 | 2.1 | 0.9 |
+| acc3_b16_g07 | 67.0 | 84.8 | 75.9 | 1.7 | 1.1 |
+| acc3_b16_g08 | 66.1 | 86.2 | 76.1 | 1.9 | 1.1 |
+| acc3_b16_g09 | 68.1 | 85.8 | 77.0 | 1.9 | 0.8 |
 
 ## Claims (mmlu)
 
-- Acc1 (B=1 full) = 67.95
-- Acc3 over 10 groupings: mean nan, std nan, min nan, max nan
-- thresholds: min = nan, mean-std = nan
+- Acc1 (B=1 full) = 66.90
+- Acc3 over 10 groupings: mean 67.21, std 0.64, min 66.10, max 68.10
+- thresholds: min = 66.10, mean-std = 66.57
 
-- acc2_keep11520: nan | >min: fail | >mean-std: fail
-- acc2_keep12288: nan | >min: fail | >mean-std: fail
-- acc2_keep12800: nan | >min: fail | >mean-std: fail
-- acc2_keep13568: nan | >min: fail | >mean-std: fail
-- acc2_keep14080: nan | >min: fail | >mean-std: fail
-- acc2_modelopt_keep11520: nan | >min: fail | >mean-std: fail
-- acc2_modelopt_keep12288: nan | >min: fail | >mean-std: fail
-- acc2_modelopt_keep12800: nan | >min: fail | >mean-std: fail
-- acc2_modelopt_keep13568: nan | >min: fail | >mean-std: fail
-- acc2_modelopt_keep14080: nan | >min: fail | >mean-std: fail
+- acc2_keep11520: 58.40 | >min: fail | >mean-std: fail
+- acc2_keep12288: 59.20 | >min: fail | >mean-std: fail
+- acc2_keep12800: 64.10 | >min: fail | >mean-std: fail
+- acc2_keep13568: 63.30 | >min: fail | >mean-std: fail
+- acc2_keep14080: 67.10 | >min: PASS | >mean-std: PASS
+- acc2_modelopt_keep11520: 55.80 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep12288: 60.30 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep12800: 62.10 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep13568: 63.20 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep14080: 67.40 | >min: PASS | >mean-std: PASS
 
 ## Claims (gsm8k)
 
@@ -60,40 +60,40 @@
 
 ## Claims (all)
 
-- Acc1 (B=1 full) = 78.71
-- Acc3 over 10 groupings: mean 85.79, std 0.51, min 84.80, max 86.50
-- thresholds: min = 84.80, mean-std = 85.28
+- Acc1 (B=1 full) = 76.30
+- Acc3 over 10 groupings: mean 76.50, std 0.46, min 75.90, max 77.15
+- thresholds: min = 75.90, mean-std = 76.04
 
-- acc2_keep11520: 54.10 | >min: fail | >mean-std: fail
-- acc2_keep12288: 67.60 | >min: fail | >mean-std: fail
-- acc2_keep12800: 70.40 | >min: fail | >mean-std: fail
-- acc2_keep13568: 79.30 | >min: fail | >mean-std: fail
-- acc2_keep14080: 83.60 | >min: fail | >mean-std: fail
-- acc2_modelopt_keep11520: 64.90 | >min: fail | >mean-std: fail
-- acc2_modelopt_keep12288: 72.10 | >min: fail | >mean-std: fail
-- acc2_modelopt_keep12800: 78.60 | >min: fail | >mean-std: fail
-- acc2_modelopt_keep13568: 81.70 | >min: fail | >mean-std: fail
-- acc2_modelopt_keep14080: 83.20 | >min: fail | >mean-std: fail
+- acc2_keep11520: 56.25 | >min: fail | >mean-std: fail
+- acc2_keep12288: 63.40 | >min: fail | >mean-std: fail
+- acc2_keep12800: 67.25 | >min: fail | >mean-std: fail
+- acc2_keep13568: 71.30 | >min: fail | >mean-std: fail
+- acc2_keep14080: 75.35 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep11520: 60.35 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep12288: 66.20 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep12800: 70.35 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep13568: 72.45 | >min: fail | >mean-std: fail
+- acc2_modelopt_keep14080: 75.30 | >min: fail | >mean-std: fail
 
 ## Paired flips vs Acc1 (McNemar exact)
 
-- acc2_keep11520: n=1000, lost 351, gained 35, p=0.0000
-- acc2_keep12288: n=1000, lost 223, gained 42, p=0.0000
-- acc2_keep12800: n=1000, lost 193, gained 40, p=0.0000
-- acc2_keep13568: n=1000, lost 113, gained 49, p=0.0000
-- acc2_keep14080: n=1000, lost 66, gained 45, p=0.0572
-- acc2_modelopt_keep11520: n=1000, lost 256, gained 48, p=0.0000
-- acc2_modelopt_keep12288: n=1000, lost 186, gained 50, p=0.0000
-- acc2_modelopt_keep12800: n=1000, lost 116, gained 45, p=0.0000
-- acc2_modelopt_keep13568: n=1000, lost 87, gained 47, p=0.0007
-- acc2_modelopt_keep14080: n=1000, lost 63, gained 38, p=0.0165
-- acc3_b16_g00: n=1000, lost 14, gained 18, p=0.5966
-- acc3_b16_g01: n=1000, lost 12, gained 20, p=0.2153
-- acc3_b16_g02: n=1000, lost 17, gained 18, p=1.0000
-- acc3_b16_g03: n=1000, lost 22, gained 22, p=1.0000
-- acc3_b16_g04: n=1000, lost 20, gained 27, p=0.3817
-- acc3_b16_g05: n=1000, lost 21, gained 18, p=0.7493
-- acc3_b16_g06: n=1000, lost 23, gained 18, p=0.5327
-- acc3_b16_g07: n=1000, lost 26, gained 17, p=0.2221
-- acc3_b16_g08: n=1000, lost 20, gained 25, p=0.5515
-- acc3_b16_g09: n=1000, lost 15, gained 16, p=1.0000
+- acc2_keep11520: n=2000, lost 541, gained 140, p=0.0000
+- acc2_keep12288: n=2000, lost 386, gained 128, p=0.0000
+- acc2_keep12800: n=2000, lost 322, gained 141, p=0.0000
+- acc2_keep13568: n=2000, lost 233, gained 133, p=0.0000
+- acc2_keep14080: n=2000, lost 141, gained 122, p=0.2670
+- acc2_modelopt_keep11520: n=2000, lost 466, gained 147, p=0.0000
+- acc2_modelopt_keep12288: n=2000, lost 362, gained 160, p=0.0000
+- acc2_modelopt_keep12800: n=2000, lost 258, gained 139, p=0.0000
+- acc2_modelopt_keep13568: n=2000, lost 205, gained 128, p=0.0000
+- acc2_modelopt_keep14080: n=2000, lost 144, gained 124, p=0.2458
+- acc3_b16_g00: n=2000, lost 67, gained 69, p=0.9317
+- acc3_b16_g01: n=2000, lost 53, gained 70, p=0.1488
+- acc3_b16_g02: n=2000, lost 58, gained 63, p=0.7163
+- acc3_b16_g03: n=2000, lost 61, gained 70, p=0.4847
+- acc3_b16_g04: n=2000, lost 60, gained 77, p=0.1714
+- acc3_b16_g05: n=2000, lost 70, gained 63, p=0.6030
+- acc3_b16_g06: n=2000, lost 65, gained 60, p=0.7207
+- acc3_b16_g07: n=2000, lost 72, gained 64, p=0.5485
+- acc3_b16_g08: n=2000, lost 80, gained 77, p=0.8732
+- acc3_b16_g09: n=2000, lost 53, gained 66, p=0.2712
