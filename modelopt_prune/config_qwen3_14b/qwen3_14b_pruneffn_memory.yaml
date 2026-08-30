@@ -3,7 +3,7 @@ defaults:
   - _self_
 
 # Input Hugging Face model to compress
-input_hf_model_path: OPENPIPE_SNAPSHOT_PLACEHOLDER
+input_hf_model_path: /home/jovyan/.cache/huggingface/hub/models--OpenPipe--Qwen3-14B-Instruct/snapshots/99e4a359e990d8d00b77ac707c34bbfbc9d8c98a
 
 # Dataset path for pruning and NAS scoring
 dataset_path: /home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/datasets/Puzzle-KD-Nemotron-Post-Training-Dataset-v2
