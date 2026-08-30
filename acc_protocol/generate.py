@@ -36,6 +36,7 @@ MODELS = {
     "deepseek": ("deepseek-ai/DeepSeek-R1-0528-Qwen3-8B", "deepseek_qwen3"),
     "gemma3": ("google/gemma-3-12b-it", "gemma3"),
     "llama31": ("meta-llama/Llama-3.1-8B-Instruct", "llama31"),
+    "qwen3_14b": ("OpenPipe/Qwen3-14B-Instruct", "qwen3_14b"),
 }
 MODEL_ID, MODEL_TAG = MODELS["deepseek"]  # overridden by --model
 SEED = 83

@@ -26,7 +26,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from common import load_jsonl, score_sample  # noqa: E402
 
-TAGS = {"deepseek": "deepseek_qwen3", "gemma3": "gemma3", "llama31": "llama31"}
+TAGS = {"deepseek": "deepseek_qwen3", "gemma3": "gemma3", "llama31": "llama31",
+        "qwen3_14b": "qwen3_14b"}
 
 
 def mcnemar_p(b, c):
