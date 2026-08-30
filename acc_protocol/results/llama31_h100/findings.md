@@ -52,11 +52,14 @@ artifacts shared with the A100 run** (topiary orders + modelopt checkpoints)
    validates (a) rerunning everything fresh on H100 rather than extending
    A100 arms, and (b) the benchmark split (all MMLU on one machine, all
    GSM8K on the other), which keeps every claim comparison same-hardware.
-5. **A100 → H100 shifts the full model itself**: Acc1 66.4→66.9 MMLU,
-   82.8→85.7 GSM8K (+2.9 pp!) on the shared-250 supersets' parent sets —
-   serving hardware alone moves GSM8K accuracy by more than the 1.8% pruning
-   cut does. Cross-hardware baseline drift dwarfs the compression effect
-   under study and belongs in the paper's framing.
+5. **Hardware vs sample composition, separated on the shared 250 questions.**
+   The headline Acc1 shift (GSM8K 82.8→85.7) is NOT a hardware effect: on the
+   identical 250 questions, A100→H100 moves Acc1 by −1.6 pp GSM8K (82.8→81.2)
+   and +1.2 pp MMLU (66.4→67.6) — comparable in size to the 1.8% pruning cut,
+   with no consistent sign. The remaining +6.0 pp on GSM8K comes from the 750
+   newly sampled questions being easier (87.2 vs 81.2 for Acc1). Cross-hardware
+   baseline drift is real and pruning-sized, and headline numbers move with
+   sample composition — both belong in the paper's framing.
 
 ## Quality (uniform across key arms)
 
