@@ -1,0 +1,50 @@
+{
+  "model_dtype": "torch.bfloat16",
+  "autocast_dtype": "torch.bfloat16",
+  "block_size": 8192,
+  "bos_rate": 0.5,
+  "data_column": "messages",
+  "val_dataset_name": "train",
+  "shuffle_seed": 81436,
+  "seed": 42,
+  "fim_rate": 0,
+  "fim_spm_rate": 0,
+  "source_datasets_to_discard": null,
+  "varlen": false,
+  "write_results": false,
+  "calc_losses_on_cpu": false,
+  "activations_log_dir": "/home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/puzzle_dir_qwen3_14b/pruning/pruning_scores/ffn_iterative/1000samples_diverse_mini",
+  "model_name_or_path": "/home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/puzzle_dir_qwen3_14b/ckpts/teacher/",
+  "load_dataset_fn": "modelopt.torch.puzzletron.utils.data.dataloaders.load_from_disk_fn",
+  "experiment_id": "1000samples_diverse_mini",
+  "activation_hooks_kwargs": {
+    "method": "iterative",
+    "target_layer": "mlp.down_proj",
+    "layer_input_descriptors_path": null,
+    "validation_full_iters": 250
+  },
+  "descriptor": "qwen3",
+  "eval_samples": 1000,
+  "micro_batch_size": 4,
+  "dataset_path": "/home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/datasets/Puzzle-KD-Nemotron-Post-Training-Dataset-v2",
+  "pruned_ckpts_output_dir": "/home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/puzzle_dir_qwen3_14b/pruning/1000samples_diverse_mini",
+  "ffn_list": null,
+  "mlp_init_mode": "PruneByActivationsLog",
+  "n_heads_in_group_list": null,
+  "gqa_init_mode": "AverageKV",
+  "hidden_size_list": null,
+  "hidden_size_init_mode": "PruneByChannelRanking",
+  "linear_init_mode": "FromTeacher",
+  "mlp_init_config_yaml": {
+    "activations_log_dir": "/home/jovyan/Tairan/Nondeterm-compression/modelopt_prune/puzzle_dir_qwen3_14b/pruning/pruning_scores/ffn_iterative/1000samples_diverse_mini"
+  },
+  "pruning_mixin": "modelopt.torch.puzzletron.pruning.ffn_intermediate_pruning_mixin.FFNIntermediatePruningMixIn",
+  "hook_class": "modelopt.torch.prune.importance_hooks.base_hooks.IterativeChannelContributionHook",
+  "intermediate_size_list": [
+    17152,
+    16384,
+    15616,
+    14848,
+    14080
+  ]
+}
