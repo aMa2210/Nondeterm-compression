@@ -80,3 +80,46 @@ $P acc_protocol/generate.py --model qwen3_14b --arm acc2ckpt --ckpt-dir \
 - Sync etiquette unchanged: only write `*_gsm8k.jsonl`; never touch mmlu files;
   `git pull --rebase --autostash` before every push.
 - Total ≈ 37 h + stage-3 wait; report per-arm completion in commit messages.
+
+## Fallback if the HF checkpoint download is unavailable (rate limits)
+
+The qwen3-14b checkpoint upload hit HuggingFace's 1000-req/5-min quota. If
+`hf download` still cannot fetch `AmA-2025/qwen3-14b-modelopt-pruned-ffn`,
+reconstruct the checkpoints locally instead — this is **exact, not an
+approximation**: puzzletron's stage 3 (channel-importance scoring) is the only
+data-dependent step, and its output is committed to this repo
+(`modelopt_prune/pruning_scores_qwen3_14b/`, 16 MB). Stage 4 is deterministic
+weight slicing given those scores, and `launch_score_activations` skips itself
+when complete scores are present.
+
+```bash
+# 1. modelopt venv (same as server A's setup)
+python3.11 -m venv .venv-modelopt && export PIP_USER=0
+git clone --depth 1 https://github.com/NVIDIA/Model-Optimizer.git modelopt-src
+.venv-modelopt/bin/pip install torch "transformers>=4.57,<5.0"
+cd modelopt-src && PIP_USER=0 ../.venv-modelopt/bin/pip install -e ".[hf,puzzletron]" \
+    && PIP_USER=0 ../.venv-modelopt/bin/pip install -r examples/puzzletron/requirements.txt && cd ..
+
+# 2. point the config at YOUR local paths, then seed the scores so stage 3 is skipped
+#    (edit input_hf_model_path / dataset_path / puzzle_dir in
+#     modelopt_prune/config_qwen3_14b/qwen3_14b_pruneffn_memory.yaml)
+mkdir -p <puzzle_dir>/pruning/pruning_scores
+cp -r modelopt_prune/pruning_scores_qwen3_14b/* <puzzle_dir>/pruning/pruning_scores/
+
+# 3. run stages 2+4 (stage 3 auto-skips), then repackage
+PIP_USER=0 .venv-modelopt/bin/torchrun --nproc_per_node 1 \
+    modelopt_prune/run_prune_ckpts.py --config modelopt_prune/config_qwen3_14b/qwen3_14b_pruneffn_memory.yaml
+for K in 17152 16384 15616 14848 14080; do
+  PIP_USER=0 .venv-modelopt/bin/python modelopt_prune/repackage_to_hf.py \
+      --child-dir <puzzle_dir>/ckpts/ffn_${K}_attn_no_op \
+      --teacher-dir <OpenPipe snapshot dir> \
+      --out-dir acc_protocol/models/qwen3_14b_modelopt_keep${K}
+done
+
+# 4. VERIFY before using: hashes must match acc_protocol/models_sha256_qwen3_14b.txt
+cd acc_protocol/models && sha256sum qwen3_14b_modelopt_keep14080/model-00001-of-*.safetensors
+```
+
+If the hashes do NOT match, stop and report — do not run the arms with
+divergent models; the protocol requires both servers to score the identical
+pruned checkpoints.
