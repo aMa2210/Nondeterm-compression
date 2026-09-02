@@ -60,12 +60,18 @@ def main():
 
     os.makedirs(args.out_dir, exist_ok=True)
     model.save_pretrained(args.out_dir, safe_serialization=True)
-    # generation config + tokenizer straight from the teacher
-    for name in ("generation_config.json", "tokenizer.json",
-                 "tokenizer_config.json", "special_tokens_map.json"):
+    # Every non-weight file from the teacher: tokenizer, generation config, and
+    # anything else the model needs. A fixed filename list is not enough — Qwen3
+    # keeps its chat template in chat_template.jinja and its BPE tables in
+    # vocab.json/merges.txt, none of which Llama has.
+    skip = {"config.json", "model.safetensors.index.json"}
+    for name in sorted(os.listdir(args.teacher_dir)):
         src = os.path.join(args.teacher_dir, name)
-        if os.path.exists(src):
-            shutil.copy(src, os.path.join(args.out_dir, name))
+        if (not os.path.isfile(src) or name in skip
+                or name.endswith(".safetensors") or name.endswith(".bin")):
+            continue
+        shutil.copy(src, os.path.join(args.out_dir, name))
+        print(f"[repack] copied {name}")
     n_params = sum(v.numel() for v in state.values())
     print(f"[repack] saved {args.out_dir} ({n_params/1e9:.2f}B params)")
 

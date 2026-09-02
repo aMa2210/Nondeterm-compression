@@ -1,7 +1,7 @@
 .venv/
 .venv-modelopt/
 modelopt-src/
-modelopt_prune/puzzle_dir/
+modelopt_prune/puzzle_dir*/
 modelopt_prune/datasets/
 acc_protocol/models/
 quick_test/reports/
