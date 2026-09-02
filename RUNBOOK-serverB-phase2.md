@@ -92,6 +92,19 @@ data-dependent step, and its output is committed to this repo
 weight slicing given those scores, and `launch_score_activations` skips itself
 when complete scores are present.
 
+**VERIFIED EMPIRICALLY on server A (2026-09-02), not just claimed.** A fresh
+`puzzle_dir` seeded only with the committed 16 MB scores was run through
+stages 2+4 and repackaged; the log confirmed `Scoring 100% completed,
+skipping...` and both sampled shards of keep14080 matched the original
+byte-for-byte:
+
+    29b91226ecbb26d7df535074...  model-00001-of-00006.safetensors  (both)
+    b4bf668aa6f8535dd467a9a3...  model-00006-of-00006.safetensors  (both)
+
+Whole run took 2.5 min for one width. The sha256 gate below is a safety
+check on YOUR environment (different library versions could in principle
+differ), not an admission that the procedure is approximate.
+
 ```bash
 # 1. modelopt venv (same as server A's setup)
 python3.11 -m venv .venv-modelopt && export PIP_USER=0
